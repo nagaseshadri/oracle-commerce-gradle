@@ -1,0 +1,8 @@
+bin
+build
+.settings
+.gradle
+META-INF/MANIFEST.MF
+.classpath
+.project
+repo

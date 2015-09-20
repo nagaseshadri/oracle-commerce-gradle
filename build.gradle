@@ -1,0 +1,38 @@
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+}
+
+tasks.eclipse.dependsOn(cleanEclipse)
+
+eclipse {
+	classpath {
+		// make sure all subproject source sets are added to the parent .classpath
+		sourceSets = allprojects.collect { it.sourceSets.collect { it } }.flatten()
+		// make sure all subproject dependencies are added to the parent .classpath
+		allprojects.configurations.compile.collect { it }.flatten().each { plusConfigurations << it }
+		//closure executed after .classpath content is loaded from existing file
+		//and after gradle build information is merged
+		file.whenMerged { cp ->
+			cp.entries.removeAll { cpentry ->
+				cpentry.kind == "src" && allprojects.find { "/" + it.name == cpentry.path }
+			}
+		}
+	}
+}
+
+//Declare the plugin Id and Version
+group = 'org.wedoit4u.gradle.plugins'
+version = '0.0.1'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file:////Workspace//myRepo")
+        }
+    }
+}
