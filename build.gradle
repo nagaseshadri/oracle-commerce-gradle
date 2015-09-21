@@ -1,6 +1,22 @@
+buildscript {
+    repositories {
+      maven {
+        url "https://plugins.gradle.org/m2/"
+      }
+    }
+    dependencies {
+      classpath "com.gradle.publish:plugin-publish-plugin:0.9.1"
+    }
+}
+
+apply plugin: 'com.gradle.plugin-publish'
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
+
+repositories {
+  jcenter()
+}
 
 dependencies {
     compile gradleApi()
@@ -26,7 +42,7 @@ eclipse {
 }
 
 //Declare the plugin Id and Version
-group = 'org.wedoit4u.gradle.plugins'
+group = 'org.wedoit4u.gradle.plugins.OracleCommercePlugin'
 version = '0.0.1'
 
 uploadArchives {
@@ -35,4 +51,20 @@ uploadArchives {
             repository(url: "file:////Workspace//myRepo")
         }
     }
+}
+
+// The configuration example below shows the minimum required properties
+// configured to publish your plugin to the plugin portal
+pluginBundle {
+  website = 'http://www.wedoit4u.org/'
+  vcsUrl = 'https://bitbucket.org/snagarajan/oracle-commerce-gradle.git'
+  description = 'Oracle Commerce Gradle Plugin'
+  tags = ['oracle commerce', 'atg', 'endeca']
+
+  plugins {
+    oracleCommercePlugin {
+      id = 'org.wedoit4u.gradle.plugins.OracleCommercePlugin'
+      displayName = 'Oracle Commerce plugin'
+    }
+  }
 }

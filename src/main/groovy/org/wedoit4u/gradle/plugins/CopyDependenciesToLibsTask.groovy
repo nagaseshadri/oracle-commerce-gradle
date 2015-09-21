@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.wedoit4u.gradle.plugins
 
 import org.gradle.api.DefaultTask

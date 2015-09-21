@@ -1,0 +1,13 @@
+# CIM Headless Mode inputs.  Edit values as needed and execute with cim -batch /path/to/this.file
+
+atg.cim.productconfig.productselector.ProductSelectionContextTask.selectedProductIdList=${productidlist}
+atg.cim.productconfig.productselector.ProductSelectionContextTask.selectedAddOnIdList=${addonidlist}
+atg.cim.productconfig.productselector.ProductSelectionContextTask.execute()
+
+<% schemas.each { schema -> %>
+
+atg.cim.database.DropSchemaTask.cimDatasourceId=${schema.datasourceid}
+atg.cim.database.DropSchemaTask.datasourceProperties=url=jdbc:oracle:thin:@${dbhost}:${dbport}:${dbname},port=${dbport},databaseType=oraclethin,driverPathsAsString=${driverpath},username=${schema.username},alias=${schema.datasourceid},jndiName=${schema.jndi},databaseName=${dbname},hostname=${dbhost},password=${schema.password}
+atg.cim.database.DropSchemaTask.execute()
+
+<% } %>
