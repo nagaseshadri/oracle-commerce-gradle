@@ -8,22 +8,26 @@ db {
     port = 1521
     name = 'XE'
     jdbcdriverpath = '/Software/ojdbc6.jar'
-    driverClassName = 'oracle.jdbc.OracleDriver'
-    core {
-        username = 'atg_core'
-        password = 'atg_core'
-        jndi = 'ATGCoreDS'
-        datasourceid = 'nonswitchingCore'
-    }
-    ca {
-        username = 'atg_ca'
-        password = 'atg_ca'
-        jndi = 'ATGCaDS'
-        datasourceid = 'management'
+    driverclassname = 'oracle.jdbc.OracleDriver'
+    schemas {
+        core {
+            username = 'atg_core'
+            password = 'atg_core'
+            jndi = 'ATGCoreDS'
+            datasourceid = 'nonswitchingCore'
+        }
+        ca {
+            username = 'atg_ca'
+            password = 'atg_ca'
+            jndi = 'ATGCaDS'
+            datasourceid = 'management'
+        }
     }
 }
 
 cim {
+    createtablestemplatefilepath = 'classpath:/cim-scripts/create-db.cim.template'
+    droptablestemplatefilepath = 'classpath:/cim-scripts/drop-db.cim.template'
     core {
         productidlist = 'endeca,publishing,siteadmin,REST,wcs_extensions,endeca_reader,commerce'
         addonidlist = 'endeca,endeca_reader,sso,merch,preview,ssoIntegration,nonswitchingdatasource,dcsui_siteadmin_versioned,REST,publishing_management,publishing_nonswitchingdatasource,publishing_externalPreviewServer'

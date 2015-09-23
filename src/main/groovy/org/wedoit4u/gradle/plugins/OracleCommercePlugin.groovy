@@ -28,6 +28,42 @@ class OracleCommercePlugin implements Plugin<Project> {
             assemblerAppEARTask.assembleEARConfig = value
             //println assemblerAppEARTask.assembleEARConfig
         }
+
+        project.extensions.config.config.db.schemas.each { key, value ->
+            Task createSchemaTablesTask = project.tasks.create("create"+key.capitalize()+"SchemaTables", CreateSchemaTablesTask.class)
+            createSchemaTablesTask.setGroup("Database")
+            createSchemaTablesTask.setDescription("Creates the OOTB tables for "  + key.capitalize()  + " from scratch using CIM")
+            createSchemaTablesTask.dependsOn(project.allprojects.generateATGManifest)
+            createSchemaTablesTask.createSchemaTablesConfig = value
+            createSchemaTablesTask.createSchemaTablesConfig.putAt("cimfilename", "create-"+key+"-db")
+            createSchemaTablesTask.createSchemaTablesConfig.putAt("dbhost", project.extensions.config.config.db.host)
+            createSchemaTablesTask.createSchemaTablesConfig.putAt("dbport", project.extensions.config.config.db.port)
+            createSchemaTablesTask.createSchemaTablesConfig.putAt("dbname", project.extensions.config.config.db.name)
+            createSchemaTablesTask.createSchemaTablesConfig.putAt("jdbcdriverpath", project.extensions.config.config.db.jdbcdriverpath)
+            createSchemaTablesTask.createSchemaTablesConfig.putAt("driverclassname", project.extensions.config.config.db.driverclassname)
+            createSchemaTablesTask.createSchemaTablesConfig.putAt("createtablestemplatefilepath", project.extensions.config.config.cim.createtablestemplatefilepath)
+            createSchemaTablesTask.createSchemaTablesConfig.putAt("droptablestemplatefilepath", project.extensions.config.config.cim.droptablestemplatefilepath)
+            createSchemaTablesTask.createSchemaTablesConfig.putAt("productidlist", project.extensions.config.config.cim.getAt(key).productidlist)
+            createSchemaTablesTask.createSchemaTablesConfig.putAt("addonidlist", project.extensions.config.config.cim.getAt(key).addonidlist)
+            println createSchemaTablesTask.createSchemaTablesConfig
+
+            Task dropSchemaTablesTask = project.tasks.create("drop"+key.capitalize()+"SchemaTables", DropSchemaTablesTask.class)
+            dropSchemaTablesTask.setGroup("Database")
+            dropSchemaTablesTask.setDescription("Drops the OOTB tables for "  + key.capitalize()  + " from scratch using CIM")
+            dropSchemaTablesTask.dependsOn(project.allprojects.generateATGManifest)
+            dropSchemaTablesTask.dropSchemaTablesConfig = value
+            dropSchemaTablesTask.dropSchemaTablesConfig.putAt("cimfilename", "drop-"+key+"-db")
+            dropSchemaTablesTask.dropSchemaTablesConfig.putAt("dbhost", project.extensions.config.config.db.host)
+            dropSchemaTablesTask.dropSchemaTablesConfig.putAt("dbport", project.extensions.config.config.db.port)
+            dropSchemaTablesTask.dropSchemaTablesConfig.putAt("dbname", project.extensions.config.config.db.name)
+            dropSchemaTablesTask.dropSchemaTablesConfig.putAt("jdbcdriverpath", project.extensions.config.config.db.jdbcdriverpath)
+            dropSchemaTablesTask.dropSchemaTablesConfig.putAt("driverclassname", project.extensions.config.config.db.driverclassname)
+            dropSchemaTablesTask.dropSchemaTablesConfig.putAt("createtablestemplatefilepath", project.extensions.config.config.cim.createtablestemplatefilepath)
+            dropSchemaTablesTask.dropSchemaTablesConfig.putAt("droptablestemplatefilepath", project.extensions.config.config.cim.droptablestemplatefilepath)
+            dropSchemaTablesTask.dropSchemaTablesConfig.putAt("productidlist", project.extensions.config.config.cim.getAt(key).productidlist)
+            dropSchemaTablesTask.dropSchemaTablesConfig.putAt("addonidlist", project.extensions.config.config.cim.getAt(key).addonidlist)
+            println dropSchemaTablesTask.dropSchemaTablesConfig
+        }
     }
 
     // Load Configuration Sample taken from - http://mrhaki.blogspot.nl/2009/11/gradle-goodness-using-properties-for.html
