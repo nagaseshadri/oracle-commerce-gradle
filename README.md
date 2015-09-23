@@ -32,19 +32,19 @@ deploy {
     assembleDir = '/u01/oracle/product/atg/ATG11.1/home/cimEars'
     dynamoRoot = '/u01/oracle/product/atg/ATG11.1/'
     applications {
-        **storefront** {
+        storefront {
             earname = 'testlive.ear'
             modules = 'DafEar.Admin TestATGModule'
         }
-        **management** {
+        management {
             earname = 'testca.ear'
             modules = 'DCS-UI.Versioned BIZUI PubPortlet DafEar.Admin SiteAdmin.Versioned DCS-UI DPS.Search.Index DCS.Search.Order.Index DAF.Endeca.Index.Versioned DCS.Endeca.Index.Versioned DCS-UI.SiteAdmin.Versioned'
         }
-        **lock** {
+        lock {
             earname = 'testlock.ear'
             modules = 'DafEar.Admin'
         }
-        **sso** {
+        sso {
             earname = 'testsso.ear'
             modules = 'DPS.InternalUsers SSO'
         }
@@ -64,13 +64,13 @@ db {
     jdbcdriverpath = '/Software/ojdbc6.jar'
     driverclassname = 'oracle.jdbc.OracleDriver'
     schemas {
-        **core** {
+        core {
             username = 'atg_core'
             password = 'atg_core'
             jndi = 'ATGCoreDS'
             datasourceid = 'nonswitchingCore'
         }
-        **ca** {
+        ca {
             username = 'atg_ca'
             password = 'atg_ca'
             jndi = 'ATGCaDS'
@@ -92,13 +92,13 @@ db {
     jdbcdriverpath = '/Software/ojdbc6.jar'
     driverclassname = 'oracle.jdbc.OracleDriver'
     schemas {
-        **core** {
+        core {
             username = 'atg_core'
             password = 'atg_core'
             jndi = 'ATGCoreDS'
             datasourceid = 'nonswitchingCore'
         }
-        **ca** {
+        ca {
             username = 'atg_ca'
             password = 'atg_ca'
             jndi = 'ATGCaDS'
