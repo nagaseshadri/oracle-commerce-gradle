@@ -8,16 +8,45 @@ created by Nagarajan Seshadri email a dot s dot nagarajan at gmail dot com
 - ATG Module that uses the plugin - example [test-atg-module](https://github.com/nagaseshadri/test-atg-module)
 
 ## Supported Tasks
-- [Generates ATG Manifest](#generateATGManifest)
-- [Assemble Application EAR](#assembleEAR)
-- [Drop Schema Tables](#dropSchemaTables)
-- [Create Schema Tables](#createSchemaTables)
+- [Generates ATG Manifest](#GenerateATGManifest)
+- [Assemble Application EAR](#AssembleEAR)
+- [Drop Schema Tables](#DropSchemaTables)
+- [Create Schema Tables](#CreateSchemaTables)
 
-## <a name="generateATGManifest">Generate ATG Manifest</a>
+# Generate ATG Manifest
 
-## <a name="assembleEAR">Assemble Application EAR</a>
+Generates the ATG Manifest for the Root and all sub modules
 
-## <a name="dropSchemaTables">Drop Schema Tables</a>
+# Assemble EAR
 
-## <a name="createSchemaTables">Create Schema Tables</a>
+The plugin generates assemble**Application**EAR tasks based on the applications defined inside deploy. So for the example snippet in **config.groovy** it would generate 4 tasks - assembleStorefrontEAR, assembleManagementEAR, assembleLockEAR, assembleSsoEAR
+
+```
+deploy {
+    assembleDir = '/u01/oracle/product/atg/ATG11.1/home/cimEars'
+    dynamoRoot = '/u01/oracle/product/atg/ATG11.1/'
+    applications {
+        storefront {
+            earname = 'testlive.ear'
+            modules = 'DafEar.Admin TestATGModule'
+        }
+        management {
+            earname = 'testca.ear'
+            modules = 'DCS-UI.Versioned BIZUI PubPortlet DafEar.Admin SiteAdmin.Versioned DCS-UI DPS.Search.Index DCS.Search.Order.Index DAF.Endeca.Index.Versioned DCS.Endeca.Index.Versioned DCS-UI.SiteAdmin.Versioned'
+        }
+        lock {
+            earname = 'testlock.ear'
+            modules = 'DafEar.Admin'
+        }
+        sso {
+            earname = 'testsso.ear'
+            modules = 'DPS.InternalUsers SSO'
+        }
+    }
+}
+```
+
+# Drop Schema Tables
+
+# Create Schema Tables
 
