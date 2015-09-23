@@ -3,5 +3,4 @@ language: groovy
 script: gradle build
 
 jdk:
-  - oraclejdk7
-	
+	- oraclejdk7
