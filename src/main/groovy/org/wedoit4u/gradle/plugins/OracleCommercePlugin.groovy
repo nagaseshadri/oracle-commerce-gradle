@@ -7,6 +7,8 @@ import org.gradle.api.java.archives.Manifest
 
 class OracleCommercePlugin implements Plugin<Project> {
     void apply(Project project) {
+        unlinkAtgModule(project)
+        linkAtgModule(project)
         project.getAllprojects().each { prj ->
             prj.getExtensions().create("config", OCPluginConfig.class)
             prj.getConfigurations().create('copyToLib')
@@ -82,6 +84,40 @@ class OracleCommercePlugin implements Plugin<Project> {
         //println "mergedConfigObj ==> "+ mergedConfigObj.common.scriptsfolder
         project.extensions.config.config = mergedConfigObj
     }
+
+    def unlinkAtgModule(project) {
+        if(project.file("$project.atgHome/../$project.name").exists()) {
+            println ("Unlinking $project.name Module ")
+            new ByteArrayOutputStream().withStream { os ->
+                project.exec{
+                    commandLine "unlink"
+                    args = ["$project.name"]
+                    workingDir "$project.atgHome/.."
+                    standardOutput = os
+                }
+                println os.toString()
+            }
+        }
+    }
+
+    def linkAtgModule(project) {
+        println ("Linking $project.name Module " + project.projectDir)
+        new ByteArrayOutputStream().withStream { os ->
+            project.exec{
+                commandLine "ln"
+                args = [
+                    "-s",
+                    project.projectDir,
+                    "$project.name"
+                ]
+                workingDir "$project.atgHome/.."
+                standardOutput = os
+            }
+
+            println os.toString()
+        }
+    }
+
 }
 
 class OCPluginConfig {
