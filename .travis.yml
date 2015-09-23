@@ -1,6 +1,8 @@
-language: groovy
+language:	groovy
 
-script: gradle build
+script: 	gradle build
 
 jdk:
-	- oraclejdk7
+    - oraclejdk7
+
+
