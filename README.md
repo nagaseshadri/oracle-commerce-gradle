@@ -12,6 +12,22 @@ Created by **Naga**rajan Seshadri
 - Refer to the build.gradle, settings.gradle and gradle.properies in the root folder
 - Refer to build.gradle inside all submodules
 
+## Supported Environments
+
+- Oracle Linux 6.6
+
+## Features
+
+- Automatically unlinks and links the workspace to a module inside ATG 11.1, name of the module is the rootProject.name as defined in settings.gradle in the root project folder
+- Loads default configuration from ocpconfig.groovy present in the plugin, all configs can be overridden by a custom config file whose path (**configFilePath**) can be mentioned in the plugin extension configuration as below
+
+```
+config {
+    atgRequired = 'DCS'
+    configFilePath = 'buildtools/gradle/config.groovy'
+}
+```
+
 ## Supported Tasks
 
 - [Generates ATG Manifest](#GenerateATGManifest)
@@ -54,7 +70,7 @@ deploy {
 
 # Drop Schema Tables
 
-The plugin adds a drop**Schema**Tables task for every schema defined inside db.  So for the example snippet (as below) in **config.groovy** it would generate 2 tasks - **dropCoreSchemaTables**, **dropCaSchemaTables**
+The plugin adds a drop**Schema**Tables task for every schema defined inside db.  So for the example snippet (as below) in **config.groovy** it would generate 2 tasks - **dropCoreSchemaTables**, **dropCaSchemaTables**. It uses a CIM template to generate a cim batch script, which is then executed to drop the schema tables bsaed on dbinit configurations
 
 ```
 db {
@@ -82,7 +98,7 @@ db {
 
 # Create Schema Tables
 
-The plugin adds a create**Schema**Tables task for every schema defined inside db.  So for the example snippet (as below) in **config.groovy** it would generate 2 tasks - **createCoreSchemaTables**, **createCaSchemaTables**
+The plugin adds a create**Schema**Tables task for every schema defined inside db.  So for the example snippet (as below) in **config.groovy** it would generate 2 tasks - **createCoreSchemaTables**, **createCaSchemaTables**. It uses a CIM template to generate a cim batch script, which is then executed to create the schema tables bsaed on dbinit configurations
 
 ```
 db {
