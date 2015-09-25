@@ -2,8 +2,8 @@
 
 [![Build Status](https://travis-ci.org/nagaseshadri/oracle-commerce-gradle.svg?branch=master)](https://travis-ci.org/nagaseshadri/oracle-commerce-gradle)
 
-Created by **Naga**rajan Seshadri 
-[Email] (a.s.nagarajan@gmail.com)
+Created by **Naga**rajan Seshadri  
+Email <a.s.nagarajan@gmail.com>  
 [Github homepage](https://github.com/nagaseshadri/oracle-commerce-gradle)
 
 ## Complete examples
@@ -30,14 +30,19 @@ config {
 
 ## Supported Tasks
 
+- [Copy Dependencies To Lib](#CopyDependenciesToLibs)
 - [Generates ATG Manifest](#GenerateATGManifest)
 - [Assemble Application EAR](#AssembleEAR)
 - [Drop Schema Tables](#DropSchemaTables)
 - [Create Schema Tables](#CreateSchemaTables)
 
+# Copy Dependencies To Libs
+
+Copies any third party dependencies to the build/libs directory based on copyToLib configuration. All dependencies in copyToLib configuration are added automatically to compile configuration so you dont need to specify the dependencies twice. Specify all runtime/compile time dependencies only in copyToLib
+
 # Generate ATG Manifest
 
-Generates the ATG Manifest for the Root and all sub modules
+Generates the ATG Manifest for the Root and all sub modules. ATG-Required is updated based on the extension property atgRequired, ATG-J2EE and ATG-EAR-Module are added based on presence of EAR inside the project/subprojects. ATG-Class-Path and ATG-Client-Class-Path are updated based on copyToLib configuration. 
 
 # Assemble EAR
 
